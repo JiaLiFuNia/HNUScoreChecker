@@ -27,28 +27,5 @@ jobs:
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
 
-      - name: Fetch upstream changes # 添加上游仓库作为远程仓库，并获取上游仓库的main分支的最新更改
-        run: |
-          git remote add upstream https://github.com/JiaLiFuNia/HNUScoreChecker.git
-          git fetch upstream main
-
-      - name: Force push changes from upstream to current main branch # 将上游main分支的更改强制推送到当前main分支
-        run: |
-          git checkout main
-          git reset --hard upstream/main
-          git push origin main --force
-
       - name: Run main.py # 运行主程序main.py
         run: python main.py
-
-      - name: Add changes # 将当前目录中的所有更改添加到Git的暂存区
-        run: |
-          git add .
-
-      - name: Commit changes # 提交更改到Git仓库
-        run: |
-          git commit -m "Update from GitHub Actions" || true  # 如果没有更改，则允许提交失败，但不中断workflow
-
-      - name: Force push changes to main branch # 将更改强制推送到main分支
-        run: |
-          git push origin main --force
