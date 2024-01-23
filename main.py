@@ -111,12 +111,12 @@ def person_message(login_message):
     if login_message['code'] != 200:
         new_jw(stu_id, pwd)
     elif login_message['code'] == 200:
-        content = f"##### 个人信息：\n" \
+        content1 = f"##### 个人信息：\n" \
                   f"姓名：{login_message['user']['userxm']}  \n" \
                   f"学号：{login_message['user']['userAccount']}  \n" \
                   f"学院：{login_message['user']['userdwmc']}  \n" \
                   f"___"
-        return content
+        return content1
 
 
 # 智慧教务登录
