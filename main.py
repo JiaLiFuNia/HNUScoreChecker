@@ -14,9 +14,11 @@ new_login_headers = {
                   'Safari/537.36 NetType/WIFI MicroMessenger/7.0.20.1781(0x6700143B) WindowsWechat(0x63090819) '
                   'XWEB/8519 Flue '
 }
-gitee_url = 'https://gitee.com/xhand_xbh/hnu/raw/master'
+# gitee_url = 'https://gitee.com/xhand_xbh/hnu/raw/master'
 # 获取密码加密公钥
-public_key = requests.get(gitee_url + '/publickey.txt').text
+# public_key = requests.get(gitee_url + '/publickey.txt').text
+public_key = "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKoR8mX0rGKLqzcWmOzbfj64K8ZIgOdHnzkXSOVOZbFu/TJhZ7rFAN+eaGkl3C4buccQd" \
+             "/EjEsj9ir7ijT7h96MCAwEAAQ== "
 
 
 # 密码加密函数
