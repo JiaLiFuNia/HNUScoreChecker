@@ -18,7 +18,7 @@ new_login_headers = {
 # 获取密码加密公钥
 # public_key = requests.get(gitee_url + '/publickey.txt').text
 public_key = "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKoR8mX0rGKLqzcWmOzbfj64K8ZIgOdHnzkXSOVOZbFu/TJhZ7rFAN+eaGkl3C4buccQd" \
-             "/EjEsj9ir7ijT7h96MCAwEAAQ== "
+             "/EjEsj9ir7ijT7h96MCAwEAAQ=="
 
 
 # 密码加密函数
