@@ -30,30 +30,35 @@ def encrpt(passward, publickey):
     return cipher_text.decode()
 
 
+def if_token():
+    login_response = new_jw(stu_id, pwd)
+    token = login_response['user']['token']
+    return login_response, token
+
+
 # 获取消息列表
 def new_if_logined(token):
-    if token == "0000":
-        login_response = new_jw(stu_id, pwd)
-        token = login_response['user']['token']
-        print(f"token：{token}")
-    else:
-        login_response = ""
-    login_headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
-                      'Chrome/107.0.0.0 '
-                      'Safari/537.36 NetType/WIFI MicroMessenger/7.0.20.1781(0x6700143B) WindowsWechat(0x63090819) '
-                      'XWEB/8519 Flue ',
-        'token': token,
-    }
-    json_data = {}
-    mes_res = requests.post('https://jwc.htu.edu.cn/dev-api/appapi/getNotice', cookies=new_login_cookies,
-                            headers=login_headers,
-                            json=json_data)
-    if mes_res.json()['code'] == 401:
-        token = "0000"
-        new_if_logined(token)
-    else:
-        return login_response, mes_res.json(), token
+    login_response = ''
+    if token == '':
+        login_response, token = if_token()
+    mes_res = {'code': 401}
+    while mes_res['code'] == 401:
+        login_headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
+                          'Chrome/107.0.0.0 '
+                          'Safari/537.36 NetType/WIFI MicroMessenger/7.0.20.1781(0x6700143B) WindowsWechat(0x63090819) '
+                          'XWEB/8519 Flue ',
+            'token': token,
+        }
+        json_data = {}
+        mes_res = requests.post('https://jwc.htu.edu.cn/dev-api/appapi/getNotice', cookies=new_login_cookies,
+                                headers=login_headers,
+                                json=json_data).json()
+        print(f"mes_res: {mes_res}")
+        if mes_res['code'] == 401:
+            login_response, token = if_token()
+        else:
+            return login_response, mes_res, token
 
 
 # 获取全部成绩,生成kcdm, cjdm, jd
@@ -112,10 +117,10 @@ def person_message(login_message):
         new_jw(stu_id, pwd)
     elif login_message['code'] == 200:
         content1 = f"##### 个人信息：\n" \
-                  f"姓名：{login_message['user']['userxm']}  \n" \
-                  f"学号：{login_message['user']['userAccount']}  \n" \
-                  f"学院：{login_message['user']['userdwmc']}  \n" \
-                  f"___"
+                   f"姓名：{login_message['user']['userxm']}  \n" \
+                   f"学号：{login_message['user']['userAccount']}  \n" \
+                   f"学院：{login_message['user']['userdwmc']}  \n" \
+                   f"___"
         return content1
 
 
@@ -130,6 +135,7 @@ def new_jw(xh, passward):
     new_jw_url = 'https://jwc.htu.edu.cn/dev-api/appapi/applogin'
     login_response = requests.post(url=new_jw_url, cookies=new_login_cookies, headers=new_login_headers,
                                    json=login_data)
+    print(login_response.json())
     if login_response.json()['code'] == 200:
         return login_response.json()
 
@@ -140,8 +146,6 @@ if __name__ == "__main__":
     pwd = 'xubohan2004819.'
     # 获取消息数目
     login_res, message_res, tokend = new_if_logined(tokend)
-    if login_res == "":
-        login_res = new_jw(stu_id, pwd)
     # 个人信息内容
     content_1 = person_message(login_res)
     content_2s = ["##### 成绩信息：  \n"]
