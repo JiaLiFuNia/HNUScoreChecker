@@ -30,7 +30,7 @@ jobs:
       - name: Fetch upstream changes # 添加上游仓库作为远程仓库，并获取上游仓库的main分支的最新更改
         run: |
           git remote add upstream https://github.com/JiaLiFuNia/HNUScoreChecker.git
-          git fetch upstream main
+          git fetch upstream master
           
       - name: Run main.py # 运行主程序main.py
         run: python main.py
