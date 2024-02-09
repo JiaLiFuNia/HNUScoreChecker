@@ -179,3 +179,7 @@ if __name__ == "__main__":
         # 发送push
         res = send_message(title, content)
         print(f"推送状态：{res}")
+
+with open(r"r.txt") as file:
+    file.read("66")
+file.close
