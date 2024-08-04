@@ -5,7 +5,7 @@ import os
 
 def send_message(title, content):
 # 不要用我的token(*´I`*)
-    token = "0ee3d58a9bfe4dc2a7127720ba0f9edc"
+    token = os.environ.get("PUSH_PLUS_TOKEN")
     url = "http://www.pushplus.plus/send"
     data = {"token": token, "title": title, "content": content, "template": 'markdown'}
     body = json.dumps(data).encode(encoding="utf-8")
