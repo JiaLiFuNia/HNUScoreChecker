@@ -1,4 +1,4 @@
-import base64
+import base64, os
 from pushplus import send_message
 import requests
 from Crypto.Cipher import PKCS1_v1_5 as Cipher_pksc1_v1_5
@@ -71,7 +71,7 @@ def get_scores_list(token):
         'token': token,
     }
     json_data = {
-        'xnxqdm': '202301',
+        'xnxqdm': '202302',
     }
     scores = requests.post('https://jwc.htu.edu.cn/dev-api/appapi/Studentcj/data', cookies=new_login_cookies,
                            headers=login_headers, json=json_data)
@@ -87,6 +87,7 @@ def get_scores_list(token):
 # 获取新增科目的信息
 def get_score(token, kcdm, mc, cjdms, jd):
     print(f"new kcdm：{kcdm}")
+    print(f"{cjdms}")
     cjdm = cjdms[kcdm]
     login_headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
@@ -137,13 +138,14 @@ def new_jw(xh, passward):
                                    json=login_data)
     print(login_response.json())
     if login_response.json()['code'] == 200:
+        print(f"66666{login_response.json()}")
         return login_response.json()
 
 
 if __name__ == "__main__":
-    tokend = 'e2b8907189b0e722ed467525664730f8'
-    stu_id = os.environ("ACCOUNT")
-    pwd = os.environ("PASSWORD")
+    tokend = ''
+    stu_id = os.environ.get("ACCOUNT")
+    pwd = os.environ.get("PASSWORD")
     # 获取消息数目
     login_res, message_res, tokend = new_if_logined(tokend)
     # 个人信息内容
