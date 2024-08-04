@@ -33,4 +33,9 @@ jobs:
           git fetch upstream master
           
       - name: Run main.py # 运行主程序main.py
+        id: run_main_program
+        env:
+          ACCOUNT: ${{ secrets.ACCOUNT }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
         run: python main.py
