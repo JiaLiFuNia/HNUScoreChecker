@@ -142,8 +142,8 @@ def new_jw(xh, passward):
 
 if __name__ == "__main__":
     tokend = 'e2b8907189b0e722ed467525664730f8'
-    stu_id = '2201214001'
-    pwd = 'xubohan2004819.'
+    stu_id = os.environ("ACCOUNT")
+    pwd = os.environ("PASSWORD")
     # 获取消息数目
     login_res, message_res, tokend = new_if_logined(tokend)
     # 个人信息内容
